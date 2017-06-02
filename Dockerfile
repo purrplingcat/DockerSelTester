@@ -3,6 +3,7 @@ FROM ubuntu:trusty
 MAINTAINER "Ellen Fawkes <fawkes@ttc.cz>"
 
 ENV TEST_DIR="/tests"
+ENV DEBUG=0
 
 RUN echo "deb http://ppa.launchpad.net/mozillateam/firefox-next/ubuntu trusty main" > /etc/apt/sources.list.d//mozillateam-firefox-next-trusty.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE49EC21
