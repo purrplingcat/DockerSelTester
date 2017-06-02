@@ -22,7 +22,7 @@ class GithubLogin(unittest.TestCase):
         driver.find_element_by_id("login_field").clear()
         driver.find_element_by_id("login_field").send_keys("ellenfawkes")
         driver.find_element_by_id("password").clear()
-        driver.find_element_by_id("password").send_keys("c#c++2NE1")
+        driver.find_element_by_id("password").send_keys("******")
         driver.find_element_by_name("commit").click()
     
     def is_element_present(self, how, what):
