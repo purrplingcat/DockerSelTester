@@ -22,7 +22,7 @@ RUN wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.z
 RUN pip install selenium
 RUN mkdir -p ${TEST_DIR}
 
-COPY ./tests ${TEST_DIR}
+# COPY ./tests ${TEST_DIR}
 ADD ./src/etc/xvfb.init /etc/init.d/xvfb
 
 ADD ./src/init.sh /
