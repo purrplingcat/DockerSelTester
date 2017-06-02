@@ -33,6 +33,8 @@ RUN chmod +x /usr/local/bin/*
 RUN chmod +x /init.sh
 RUN update-rc.d xvfb defaults
 
+VOLUME /tests
+
 WORKDIR /
 
 ENTRYPOINT [ "./init.sh" ]
