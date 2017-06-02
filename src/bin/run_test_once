@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+        echo "Usage: ${0} <test_dir>"
+        exit 1;
+fi
+
+testDir=${1}
+
+echo "__________________________________________________"
+echo "      __                                          "
+echo "    /    )         /               ,              "
+echo "----\--------__---/----__----__--------------_--_-"
+echo "     \     /___) /   /___) /   ) /   /   /  / /  )"
+echo "_(____/___(___ _/___(___ _/___/_/___(___(__/_/__/_"
+echo "                                  Test runner v1.0"
+echo ""
+
+echo "Count of test scipts: $(ls $testDir/*_test.py | wc -l) | $(python --version 2>&1) | Testing is in progress!!"
+echo ""
+
+python -m unittest discover -s $testDir -p "*_test.py"

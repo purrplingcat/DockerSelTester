@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ ! -f /.dockerenv ]; then
+	echo "This tool can't be run outside docker container!"
+	exit 22;
+fi
+
+if [ -z "$TEST_DIR" ]; then
+	echo "Test dir not specified!"
+	echo "Specify testdir 'export TEST_DIR=/path/to/my/tests'"
+	exit 1;
+fi
+
+/usr/local/bin/run_tests $TEST_DIR | tee /var/log/test_result.log

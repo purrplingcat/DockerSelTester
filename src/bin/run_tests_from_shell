@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo "Selenium test runner v1.0"
+
+if [ $# -lt 1 ]; then
+	echo "Usage: ${0} <test_dir>"
+	exit 1;
+fi
+
+failed=0
+count=0
+testDir=${1}
+
+echo "Count of test scipts: $(ls $testDir/*.py | wc -l)"
+
+for _test in $(ls $testDir/*.py); do
+	echo ""
+	echo "Running test script: $_test ..."
+	python $_test
+	code=$?
+	if [ $code -ne 0 ]; then
+		failed=$((failed+1))
+		echo -e "\e[31m>> Test script FAILED!\e[0m"
+	else
+		echo -e "\e[32m>> Test script PASSED!\e[0m"
+	fi
+	count=$((count+1))
+done
+
+echo ""
+echo "============================================="
+echo "Testing DONE! Failed $failed of $count test scripts"

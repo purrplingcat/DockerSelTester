@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ ! -f /.dockerenv ]; then
+	echo "This tool can't be run outside docker container!"
+	exit 22;
+fi
+
+if [ -z "$TEST_DIR" ]; then
+	echo "Test dir not specified!"
+	echo "Specify testdir 'export TEST_DIR=/path/to/my/tests'"
+	exit 1;
+fi
+
+if [ $# -lt 1 ]; then
+	echo "Specify a test for run!"
+	exit 1;
+fi
+
+echo "Running single test: ${1} ..."
+python $TEST_DIR/${1}_test.py | tee /var/log/test_${1}_result.log
