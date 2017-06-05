@@ -11,4 +11,15 @@ if [ -z "$TEST_DIR" ]; then
 	exit 1;
 fi
 
-/usr/local/bin/run_tests $TEST_DIR | tee /var/log/test_result.log
+: ${1:-}
+
+if [ "${1}" = "--report" ]; then
+	if [ -z "$REPORT_DIR" ]; then
+		echo "Report dit not specified!"
+		echo "Specify reportdir 'export REPORT_DIR=/path/to/my/reports"
+		exit 1;
+	fi
+	run_tests -t $TEST_DIR -r $REPORT_DIR # run tests with reporting
+else
+	run_tests -t $TEST_DIR # Run test without reporting
+fi

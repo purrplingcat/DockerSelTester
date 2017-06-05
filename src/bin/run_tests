@@ -5,7 +5,27 @@ if [ $# -lt 1 ]; then
         exit 1;
 fi
 
-testDir=${1}
+TESTDIR=""
+REPORTDIR=""
+
+while getopts ":t:r:" opt; do
+  case $opt in
+    t)
+      	TESTDIR=$OPTARG
+      ;;
+    r)
+        REPORTDIR=$OPTARG
+	;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
 
 echo "__________________________________________________"
 echo "      __                                          "
@@ -16,7 +36,20 @@ echo "_(____/___(___ _/___(___ _/___/_/___(___(__/_/__/_"
 echo "                                  Test runner v1.0"
 echo ""
 
-echo "Count of test scipts: $(ls $testDir/*_test.py | wc -l) | $(python --version 2>&1) | Testing is in progress!!"
+echo "Count of test scipts: $(ls $TESTDIR/*_test.py | wc -l) | $(python --version 2>&1) | Testing is in progress!!"
 echo ""
 
-python -m unittest discover -s $testDir -p "*_test.py"
+if [ -z $TESTDIR ]; then
+	echo "No testing directory specified. ABORT !!"
+	exit 2;
+fi
+
+if [ -z $REPORTDIR ]; then
+	echo "Test reporting DISABLED."
+	echo ""
+	python -m unittest discover -s $TESTDIR -p "*_test.py"
+else
+	echo "Test reporting ENABLED. (Placed in: $REPORTDIR)"
+	echo ""
+	TestRunnerReport.py $TESTDIR $REPORTDIR
+fi

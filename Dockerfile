@@ -3,6 +3,7 @@ FROM ubuntu:trusty
 MAINTAINER "Ellen Fawkes <fawkes@ttc.cz>"
 
 ENV TEST_DIR="/tests"
+ENV REPORT_DIR="/report"
 ENV DEBUG=0
 
 RUN echo "deb http://ppa.launchpad.net/mozillateam/firefox-next/ubuntu trusty main" > /etc/apt/sources.list.d//mozillateam-firefox-next-trusty.list
@@ -20,7 +21,9 @@ RUN wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.z
     unzip /tmp/chromedriver_linux64.zip -d /usr/bin
 
 RUN pip install selenium
+RUN pip install custom_text_test_runner
 RUN mkdir -p ${TEST_DIR}
+RUN mkdir -p ${REPORT_DIR} && mkdir -p ${REPORT_DIR}/screenshots
 
 # COPY ./tests ${TEST_DIR}
 ADD ./src/etc/xvfb.init /etc/init.d/xvfb
@@ -33,9 +36,10 @@ RUN chmod +x /usr/local/bin/*
 RUN chmod +x /init.sh
 RUN update-rc.d xvfb defaults
 
-VOLUME /tests
+VOLUME ${TEST_DIR}
+VOLUME ${REPORT_DIR}
 
 WORKDIR /
 
 ENTRYPOINT [ "./init.sh" ]
-CMD [ "do_all_tests" ]
+CMD [ "do_all_tests", "--report" ]
