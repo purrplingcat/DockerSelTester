@@ -13,3 +13,6 @@ return_code = CustomTextTestRunner(
     results_file_path=sys.argv[2] + '/test_report.json',
     result_screenshots_dir=sys.argv[2] + '/screenshots',
     show_previous_results=True).run(test_modules).returnCode()
+
+print ""
+print "*** Test report placed in: " + sys.argv[2] + "/test_report.json"
