@@ -52,6 +52,7 @@ fi
 if [ -z $REPORTDIR ]; then
 	echo "Test reporting DISABLED."
 	echo ""
+	mkdir -p $REPORTDIR
 	python -m unittest discover -s $TESTDIR -p "*_test.py"
 else
 	echo "Test reporting ENABLED. (Placed in: $REPORTDIR)"
