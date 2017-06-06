@@ -7,6 +7,7 @@ fi
 
 TESTDIR=""
 REPORTDIR=""
+: {$SCREEN_DIR:screenshots}
 
 while getopts ":t:r:" opt; do
   case $opt in
@@ -42,6 +43,10 @@ echo ""
 if [ -z $TESTDIR ]; then
 	echo "No testing directory specified. ABORT !!"
 	exit 2;
+fi
+
+if [ ! -d $SCREEN_DIR ]; then
+	mkdir -p $SCREEN_DIR
 fi
 
 if [ -z $REPORTDIR ]; then
