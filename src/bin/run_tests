@@ -37,12 +37,19 @@ echo "_(____/___(___ _/___(___ _/___/_/___(___(__/_/__/_"
 echo "                                  Test runner v1.0"
 echo ""
 
-echo "Count of test scipts: $(ls $TESTDIR/*_test.py | wc -l) | $(python --version 2>&1) | Testing is in progress!!"
+if [ -z $TESTDIR ]; then
+        echo "No testing directory specified. ABORT !!"
+        exit 2;
+fi
+
+COUNT=$(ls $TESTDIR/*_test.py 2>/dev/null | wc -l)
+
+echo "Count of test scipts: $COUNT | $(python --version 2>&1) | Testing is in progress!!"
 echo ""
 
-if [ -z $TESTDIR ]; then
-	echo "No testing directory specified. ABORT !!"
-	exit 2;
+if [ $COUNT -eq 0 ]; then
+	echo "Nothing to test."
+	exit 0
 fi
 
 if [ ! -d $SCREEN_DIR ]; then
