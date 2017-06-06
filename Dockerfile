@@ -4,6 +4,7 @@ MAINTAINER "Ellen Fawkes <fawkes@ttc.cz>"
 
 ENV TEST_DIR="/tests"
 ENV REPORT_DIR="/report"
+ENV SCREEN_DIR="/report/screenshots"
 ENV DEBUG=0
 
 RUN echo "deb http://ppa.launchpad.net/mozillateam/firefox-next/ubuntu trusty main" > /etc/apt/sources.list.d//mozillateam-firefox-next-trusty.list
@@ -23,13 +24,14 @@ RUN wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.z
 RUN pip install selenium
 RUN pip install custom_text_test_runner
 RUN mkdir -p ${TEST_DIR}
-RUN mkdir -p ${REPORT_DIR} && mkdir -p ${REPORT_DIR}/screenshots
+RUN mkdir -p ${REPORT_DIR} && mkdir -p ${SCREEN_DIR}
 
 # COPY ./tests ${TEST_DIR}
 ADD ./src/etc/xvfb.init /etc/init.d/xvfb
 
 ADD ./src/init.sh /
-ADD ./src/bin /usr/local/bin
+COPY ./src/bin /usr/local/bin
+COPY ./src/lib /usr/lib/python2.7
 
 RUN chmod +x /etc/init.d/xvfb
 RUN chmod +x /usr/local/bin/*

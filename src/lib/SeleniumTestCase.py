@@ -5,7 +5,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+from datetime import datetime
+import sys, os, unittest, time, re
 
 class SeleniumTestCase(unittest.TestCase):
     def setUp(self):
@@ -35,13 +36,10 @@ class SeleniumTestCase(unittest.TestCase):
                 alert.dismiss()
             return alert_text
         finally: self.accept_next_alert = True
-    
     def tearDown(self):
         if sys.exc_info()[0]:  # Returns the info of exception being handled 
-            fail_url = self.driver.current_url
-            print fail_url
             now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S-%f')
-            self.driver.get_screenshot_as_file('/data/screenshots/failed_%s.png' % now) # my tests work in parallel, so I need uniqe file names
+            self.driver.get_screenshot_as_file(os.getenv('SCREEN_DIR', './screenshots') + '/failed_%s.png' % now) # my tests work in parallel, so I need uniqe file names
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
 
