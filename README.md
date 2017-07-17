@@ -5,7 +5,7 @@ Selenium tester environment in Docker
 
 ```
 $ git clone https://github.com/EllenFawkes/DockerSelTester.git
-$ docker built -t yourCompany/selenium .
+$ docker build -t yourCompany/selenium .
 $ docker run -v /your/test/dir:/tests --rm yourCompany/selenium
 ```
 
